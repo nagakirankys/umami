@@ -70,6 +70,7 @@
     url: encode(currentUrl),
     referrer: encode(currentRef),
     tag: tag ? tag : undefined,
+    userId: sessionStorage.getItem('atom_portal_USER_NAME'),
   });
 
   /* Event handlers */

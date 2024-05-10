@@ -27,7 +27,7 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
   }
 
   // Verify payload
-  const { website: websiteId, hostname, screen, language } = payload;
+  const { website: websiteId, hostname, screen, language, userId } = payload;
 
   // Find website
   const website = await fetchWebsite(websiteId);
@@ -39,7 +39,14 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
   const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
     await getClientInfo(req);
 
-  const sessionId = uuid(websiteId, hostname, ip, userAgent);
+  // If userId is not available, don't track it
+  if(!userId) {
+    return;
+  }
+
+  // const sessionId = uuid(websiteId, hostname, ip, userAgent);
+  // Consider userId to make each of them as unique visitors
+  const sessionId = uuid(websiteId, userId);
   const visitId = uuid(sessionId, visitSalt());
 
   // Clickhouse does not require session lookup
