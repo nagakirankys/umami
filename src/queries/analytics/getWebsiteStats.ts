@@ -33,12 +33,14 @@ async function relationalQuery(
       sum(t.c) as "pageviews",
       count(distinct t.session_id) as "visitors",
       count(distinct t.visit_id) as "visits",
+      count(distinct t.domain_id) as "orgs",
       sum(case when t.c = 1 then 1 else 0 end) as "bounces",
       sum(${getTimestampDiffQuery('t.min_time', 't.max_time')}) as "totaltime"
     from (
       select
         website_event.session_id,
         website_event.visit_id,
+        website_event.domain_id,
         count(*) as "c",
         min(website_event.created_at) as "min_time",
         max(website_event.created_at) as "max_time"
@@ -48,7 +50,7 @@ async function relationalQuery(
         and website_event.created_at between {{startDate}} and {{endDate}}
         and event_type = {{eventType}}
         ${filterQuery}
-      group by 1, 2
+      group by 1, 2, 3
     ) as t
     `,
     params,

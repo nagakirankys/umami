@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import classNames from 'classnames';
 import { useMessages, useSticky } from 'components/hooks';
 import WebsiteDateFilter from 'components/input/WebsiteDateFilter';
@@ -21,11 +23,12 @@ export function WebsiteMetricsBar({
   const { ref, isSticky } = useSticky({ enabled: sticky });
   const { data, isLoading, isFetched, error } = useWebsiteStats(websiteId);
 
-  const { pageviews, visitors, visits, bounces, totaltime } = data || {};
+  const { pageviews, visitors, visits, orgs, bounces, totaltime } = data || {};
   const num = Math.min(data && visitors.value, data && bounces.value);
   const diffs = data && {
     pageviews: pageviews.value - pageviews.change,
     visitors: visitors.value - visitors.change,
+    // orgs: orgs.value - orgs.change,
     visits: visits.value - visits.change,
     bounces: bounces.value - bounces.change,
     totaltime: totaltime.value - totaltime.change,
@@ -58,6 +61,12 @@ export function WebsiteMetricsBar({
               change={visitors.change}
             />
             <MetricCard
+              label={formatMessage(labels.orgs)}
+              value={orgs.value}
+              change={orgs.change}
+            />
+            {/*
+            <MetricCard
               label={formatMessage(labels.bounceRate)}
               value={visitors.value ? (num / visitors.value) * 100 : 0}
               change={
@@ -84,7 +93,7 @@ export function WebsiteMetricsBar({
                   : 0
               }
               format={n => `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`}
-            />
+            />*/}
           </>
         )}
       </MetricsBar>

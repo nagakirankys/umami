@@ -101,7 +101,11 @@ function parseFields(fields: any[]) {
 
       return arr.concat(`${FILTER_COLUMNS[name]} as "${name}"`);
     },
-    ['count(*) as views', 'count(distinct website_event.session_id) as visitors'],
+    [
+      'count(*) as views',
+      'count(distinct website_event.session_id) as visitors',
+      'count(distinct website_event.domain_id) as orgs',
+    ],
   );
 
   return query.join(',\n');

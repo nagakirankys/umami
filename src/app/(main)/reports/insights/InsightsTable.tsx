@@ -42,6 +42,9 @@ export function InsightsTable() {
       <GridColumn name="views" label={formatMessage(labels.views)} width="100px" alignment="end">
         {row => row?.views?.toLocaleString()}
       </GridColumn>
+      <GridColumn name="orgs" label={formatMessage(labels.orgs)} width="100px" alignment="end">
+        {row => row?.orgs?.toLocaleString()}
+      </GridColumn>
     </GridTable>
   );
 }
