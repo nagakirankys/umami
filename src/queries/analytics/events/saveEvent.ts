@@ -9,6 +9,7 @@ export async function saveEvent(args: {
   websiteId: string;
   sessionId: string;
   visitId: string;
+  domainId?: string;
   urlPath: string;
   urlQuery?: string;
   referrerPath?: string;
@@ -38,6 +39,7 @@ async function relationalQuery(data: {
   websiteId: string;
   sessionId: string;
   visitId: string;
+  dmainId?: string;
   urlPath: string;
   urlQuery?: string;
   referrerPath?: string;
@@ -51,6 +53,7 @@ async function relationalQuery(data: {
     websiteId,
     sessionId,
     visitId,
+    domainId,
     urlPath,
     urlQuery,
     referrerPath,
@@ -68,6 +71,7 @@ async function relationalQuery(data: {
       websiteId,
       sessionId,
       visitId,
+      domain_id: domainId,
       urlPath: urlPath?.substring(0, URL_LENGTH),
       urlQuery: urlQuery?.substring(0, URL_LENGTH),
       referrerPath: referrerPath?.substring(0, URL_LENGTH),

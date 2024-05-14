@@ -27,7 +27,7 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
   }
 
   // Verify payload
-  const { website: websiteId, hostname, screen, language, userId } = payload;
+  const { website: websiteId, hostname, screen, language, userId, domainId } = payload;
 
   // Find website
   const website = await fetchWebsite(websiteId);
@@ -36,11 +36,13 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
     throw new Error(`Website not found: ${websiteId}.`);
   }
 
-  const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
-    await getClientInfo(req);
+  // const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
+  const { browser, os, country, subdivision1, subdivision2, city, device } = await getClientInfo(
+    req,
+  );
 
   // If userId is not available, don't track it
-  if(!userId) {
+  if (!userId) {
     return;
   }
 
@@ -76,6 +78,7 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
     try {
       session = await createSession({
         id: sessionId,
+        domainId,
         websiteId,
         hostname,
         browser,

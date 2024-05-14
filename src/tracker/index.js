@@ -71,6 +71,7 @@
     referrer: encode(currentRef),
     tag: tag ? tag : undefined,
     userId: sessionStorage.getItem('atom_portal_USER_NAME'),
+    domainId: sessionStorage.getItem('atom_portal_ORG_DISPLAY_NAME'),
   });
 
   /* Event handlers */
