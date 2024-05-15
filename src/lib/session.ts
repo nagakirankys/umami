@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { secret, uuid, visitSalt } from 'lib/crypto';
 import { getClientInfo } from 'lib/detect';
 import { parseToken } from 'next-basics';
@@ -36,19 +38,12 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
     throw new Error(`Website not found: ${websiteId}.`);
   }
 
-  // const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
-  const { browser, os, country, subdivision1, subdivision2, city, device } = await getClientInfo(
-    req,
-  );
+  const { userAgent, browser, os, ip, country, subdivision1, subdivision2, city, device } =
+    await getClientInfo(req);
 
-  // If userId is not available, don't track it
-  if (!userId) {
-    return;
-  }
-
-  // const sessionId = uuid(websiteId, hostname, ip, userAgent);
+  const sessionId = uuid(websiteId, hostname, ip, userAgent);
   // Consider userId to make each of them as unique visitors
-  const sessionId = uuid(websiteId, userId);
+  // const sessionId = uuid(websiteId, userId);
   const visitId = uuid(sessionId, visitSalt());
 
   // Clickhouse does not require session lookup
@@ -78,7 +73,6 @@ export async function getSession(req: NextApiRequestCollect): Promise<SessionDat
     try {
       session = await createSession({
         id: sessionId,
-        domainId,
         websiteId,
         hostname,
         browser,
