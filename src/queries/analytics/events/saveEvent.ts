@@ -40,6 +40,7 @@ async function relationalQuery(data: {
   sessionId: string;
   visitId: string;
   dmainId?: string;
+  userId?: string;
   urlPath: string;
   urlQuery?: string;
   referrerPath?: string;
@@ -54,6 +55,7 @@ async function relationalQuery(data: {
     sessionId,
     visitId,
     domainId,
+    userId,
     urlPath,
     urlQuery,
     referrerPath,
@@ -72,6 +74,7 @@ async function relationalQuery(data: {
       sessionId,
       visitId,
       domain_id: domainId,
+      userId,
       urlPath: urlPath?.substring(0, URL_LENGTH),
       urlQuery: urlQuery?.substring(0, URL_LENGTH),
       referrerPath: referrerPath?.substring(0, URL_LENGTH),
@@ -82,6 +85,10 @@ async function relationalQuery(data: {
       eventName: eventName ? eventName?.substring(0, EVENT_NAME_LENGTH) : null,
     },
   });
+  //Hash orgId if exists in eventData
+  if (eventData?.['orgId']) {
+    eventData['orgId'] = uuid(eventData['orgId']);
+  }
 
   if (eventData) {
     await saveEventData({

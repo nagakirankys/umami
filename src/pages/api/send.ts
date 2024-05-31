@@ -97,7 +97,7 @@ export default async (req: NextApiRequestCollect, res: NextApiResponse) => {
     }
 
     const { type, payload } = req.body;
-    const { url, referrer, name: eventName, data, title, domainId } = payload;
+    const { url, referrer, name: eventName, data, title, domainId, userId } = payload;
     const pageTitle = safeDecodeURI(title);
 
     await useSession(req, res);
@@ -145,6 +145,7 @@ export default async (req: NextApiRequestCollect, res: NextApiResponse) => {
         eventData: data,
         ...session,
         domainId: uuid(domainId),
+        userId: uuid(userId),
         sessionId: session.id,
         visitId: session.visitId,
       });
