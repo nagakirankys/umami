@@ -111,6 +111,7 @@ model WebsiteEvent {
   @@index([sessionId])
   @@index([domainId])
   @@index([visitId])
+  @@index([userId])
   @@index([websiteId])
   @@index([websiteId, createdAt])
   @@index([websiteId, createdAt, urlPath])

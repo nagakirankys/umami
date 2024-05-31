@@ -66,6 +66,13 @@ export function MetricsTable({
           items = dataFilter(data);
         }
       }
+      if (search) {
+        items = items.filter(({ x, ...data }) => {
+          const value = formatValue(x, type, data);
+
+          return value?.toLowerCase().includes(search.toLowerCase());
+        });
+      }
 
       items = percentFilter(items);
 
