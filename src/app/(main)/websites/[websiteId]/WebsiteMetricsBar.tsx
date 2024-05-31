@@ -23,12 +23,13 @@ export function WebsiteMetricsBar({
   const { ref, isSticky } = useSticky({ enabled: sticky });
   const { data, isLoading, isFetched, error } = useWebsiteStats(websiteId);
 
-  const { pageviews, visitors, visits, orgs, bounces, totaltime } = data || {};
+  const { pageviews, visitors, visits, users, orgs, bounces, totaltime } = data || {};
   const num = Math.min(data && visitors.value, data && bounces.value);
   const diffs = data && {
     pageviews: pageviews.value - pageviews.change,
     visitors: visitors.value - visitors.change,
     // orgs: orgs.value - orgs.change,
+    // users: users.value - users.change,
     visits: visits.value - visits.change,
     bounces: bounces.value - bounces.change,
     totaltime: totaltime.value - totaltime.change,
@@ -56,9 +57,14 @@ export function WebsiteMetricsBar({
               change={visits.change}
             />
             <MetricCard
-              label={formatMessage(labels.visitors)}
+              label={formatMessage(labels.clients)}
               value={visitors.value}
               change={visitors.change}
+            />
+            <MetricCard
+              label={formatMessage(labels.users)}
+              value={users?.value}
+              change={users?.change}
             />
             <MetricCard
               label={formatMessage(labels.orgs)}
