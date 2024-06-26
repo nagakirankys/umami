@@ -39,7 +39,7 @@ async function relationalQuery(data: {
   websiteId: string;
   sessionId: string;
   visitId: string;
-  dmainId?: string;
+  domainId?: string;
   userId?: string;
   urlPath: string;
   urlQuery?: string;
@@ -73,7 +73,7 @@ async function relationalQuery(data: {
       websiteId,
       sessionId,
       visitId,
-      domain_id: domainId,
+      domainId,
       userId,
       urlPath: urlPath?.substring(0, URL_LENGTH),
       urlQuery: urlQuery?.substring(0, URL_LENGTH),
